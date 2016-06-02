@@ -20,4 +20,4 @@ Next generate keys
 docker exec cifv2 /opt/cif/bin/cif.ops generate-keys
 ```
 
-Now you should be able to access your cif container with a browser at http://<docker-ip>:8080
+Now you should be able to access your cif container with a browser at http://`<docker-ip>`:8080
