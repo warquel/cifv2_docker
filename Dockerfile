@@ -44,7 +44,7 @@ RUN /usr/share/elasticsearch/bin/elasticsearch -d \
     && cpanm --force --notest http://search.cpan.org/CPAN/authors/id/H/HA/HAARG/local-lib-2.000015.tar.gz \
     && echo 'HRNGDEVICE=/dev/urandom' >> /etc/default/rng-tools \
     && cd /tmp \
-    && git clone https://github.com/csirtgadgets/massive-octo-spice.git cifv2 \
+    && git clone -b 2.00.00-rc.16 https://github.com/csirtgadgets/massive-octo-spice.git cifv2 \
     && cd /tmp/cifv2 \
     && ./autogen.sh \
     && ./configure --enable-geoip --sysconfdir=/opt/cif/etc --localstatedir=/opt/cif/var --prefix=/opt/cif \
