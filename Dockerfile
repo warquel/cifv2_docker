@@ -37,8 +37,9 @@ RUN /usr/share/elasticsearch/bin/elasticsearch -d \
     && cpanm --force --notest https://github.com/csirtgadgets/ZMQx-Class/archive/master.tar.gz \
     && cpanm Log::Log4perl@1.44 \
     && cpanm --force Test::Exception@0.32 \
-    && cpanm MaxMind::DB::Reader@0.050005 GeoIP2@0.040005 Hijk@0.19 \
-    && cpanm --force --notest https://github.com/csirtgadgets/p5-cif-sdk/archive/2.00_34.tar.gz \
+    && cpanm MaxMind::DB::Reader@0.050005 GeoIP2@0.040005 Hijk@0.19
+
+RUN cpanm --force --notest git://github.com/csirtgadgets/p5-cif-sdk.git@afae699500333cca1ae53b87b56e4ca639bbf4f3 \
     && cpanm --force --notest https://github.com/kraih/mojo/archive/v5.82.tar.gz \
     && cpanm Search::Elasticsearch@1.19 \
     && cpanm --force --notest http://search.cpan.org/CPAN/authors/id/H/HA/HAARG/local-lib-2.000015.tar.gz \
@@ -49,6 +50,7 @@ RUN /usr/share/elasticsearch/bin/elasticsearch -d \
     && ./autogen.sh \
     && ./configure --enable-geoip --sysconfdir=/opt/cif/etc --localstatedir=/opt/cif/var --prefix=/opt/cif \
     && mkdir -p /opt/cif/var/cache \
+    && mkdir -p /opt/cif/www \
     && make \
     && make deps \
     && make install \
@@ -68,5 +70,6 @@ ADD ./configs/geoipupdate.cron /etc/cron.montly/geoipupdate
 ADD ./configs/unbound.conf /etc/unbound/unbound.conf.d/unbound.conf
 ADD ./configs/GeoIP.conf /etc/GeoIP.conf
 ADD ./scripts/cif.ops /opt/cif/bin/cif.ops
+ADD ./files/index.html /opt/cif/www/index.html
 
 CMD /usr/bin/supervisord -c /etc/supervisor/supervisord.conf

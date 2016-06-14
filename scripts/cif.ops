@@ -21,9 +21,13 @@ function usage {
 }
 
 function cif_generate_tokens {
-    eval /opt/cif/bin/cif-tokens --username cif-smrt --new --write --generate-config-remote http://localhost:5000 --generate-config-path ${CIFETC}/cif-smrt.yml
-    eval /opt/cif/bin/cif-tokens --username cif-worker --new --read --write --generate-config-remote tcp://localhost:4961 --generate-config-path ${CIFETC}/cif-worker.yml
-    eval /opt/cif/bin/cif-tokens --username root@localhost --new --read --write --generate-config-remote https://localhost --generate-config-path /root/.cif.yml
+    if [ ! -z "$1" ]
+    then
+        GPS="--groups $1"
+    fi
+    eval /opt/cif/bin/cif-tokens --username cif-smrt ${GPS} --new --write --generate-config-remote http://localhost:5000 --generate-config-path ${CIFETC}/cif-smrt.yml
+    eval /opt/cif/bin/cif-tokens --username cif-worker ${GPS} --new --read --write --generate-config-remote tcp://localhost:4961 --generate-config-path ${CIFETC}/cif-worker.yml
+    eval /opt/cif/bin/cif-tokens --username root@localhost ${GPS} --new --read --write --generate-config-remote https://localhost --generate-config-path /root/.cif.yml
 }
 
 function cif_init {
@@ -54,7 +58,7 @@ function cif-remove-templates {
 
 case "$1" in
     generate-tokens)
-        cif_generate_tokens
+        cif_generate_tokens $2
         ;;
     init)
         cif_init
